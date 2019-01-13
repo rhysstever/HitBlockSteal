@@ -18,6 +18,7 @@ namespace HitBlockSteal
 		// Properties for each field
 		// Every field has both a get and set property except
 		// for Name (user is unable to change the player name
+		// after game has begun)
 		public string Name { get { return name; } }
 		public int Lives
 		{

@@ -29,7 +29,7 @@ namespace HitBlockSteal
 				// Decision Phase: Asks each player for their action for the round
 				foreach(Player player in playerList)
 				{
-					Console.WriteLine(" *** Round " + round + ": Decision Phase\n");
+					Console.WriteLine(" *** Round " + round + ": Decision Phase ***\n");
 					
 					Console.Write(" " + player.Name + ", do you wish to Hit, Block, Steal? ");
 					player.Action = Console.ReadLine();
@@ -47,28 +47,30 @@ namespace HitBlockSteal
 							Console.WriteLine(" You have chosen to steal some cash.");
 							break;
 					}
+
+					Console.Write("\n Press enter to continue...");
 					Console.ReadLine();
 					Console.Clear();
 				}
 
 				// Results Phase: Displays each player's decision
-				Console.WriteLine(" *** Round " + round + ": Results Phase\n");
+				Console.WriteLine(" *** Round " + round + ": Results Phase ***\n");
 
 				foreach (Player player in playerList)
 				{
 					Console.Write(" " + player.Name + "'s action is: ");
-					Console.Write(player.Action);
-					if (player.Action.Equals("Hit "))
-						Console.WriteLine("Player " + player.Victim);
+					if (player.Action.Equals("Hit"))
+						Console.WriteLine("Hit Player " + player.Victim);
 					else
-						Console.WriteLine("");
-					Console.WriteLine("");
+						Console.WriteLine(player.Action);
 				}
 
+				Console.Write(" Press enter to continue...");
 				Console.ReadLine();
+				Console.Clear();
 
 				// Resolution Phase: Resolves each player's action
-				Console.WriteLine(" *** Round " + round + ": Resolution Phase\n");
+				Console.WriteLine(" *** Round " + round + ": Resolution Phase ***\n");
 
 				foreach (Player player in playerList)
 				{
@@ -83,7 +85,6 @@ namespace HitBlockSteal
 						{
 							playerList[player.Victim - 1].Lives--;
 							Console.WriteLine(" " + playerList[player.Victim - 1].Name + " takes one damage!");
-							Console.WriteLine(" " + playerList[player.Victim - 1].Name + " has " + playerList[player.Victim - 1].Lives + " left.");
 						}
 					}
 					else if(player.Action.Equals("Block"))
@@ -95,29 +96,44 @@ namespace HitBlockSteal
 						Console.WriteLine(" " + player.Name + " tries to steal cash...");
 						foreach (Player secondPlayer in playerList)
 						{
-							if(playerList[secondPlayer.Victim - 1].Equals(player))
+							if(secondPlayer.Equals(player))
 							{
-								Console.WriteLine(" " + player.Name + " has been attacked by " + secondPlayer.Name + ". ");
-								Console.WriteLine(player.Name + " is unsuccessful in stealing some money.");
-							}
-							else
-							{
-								Console.WriteLine(" " + player.Name + " successfully steals $100!");
-								player.Cash += 100;
+								if (playerList[secondPlayer.Victim].Equals(player))
+								{
+									Console.WriteLine(" " + player.Name + " has been attacked by " + secondPlayer.Name + ". ");
+									Console.WriteLine(" " + player.Name + " is unsuccessful in stealing some money.");
+								}
+								else
+								{
+									Console.WriteLine(" " + player.Name + " successfully steals $100!");
+									player.Cash += 100;
+								}
 							}
 						}
 					}
+
+					Console.WriteLine("");
 				}
+
+				Console.Write("\n Press enter to continue...");
+				Console.ReadLine();
+				Console.Clear();
+
+				// Displays each player's lives and checks to see if any player has died (lives = 0)
+				Console.WriteLine(" *** Lives after Round " + round + "***\n");
 
 				foreach (Player player in playerList)
 				{
-					if(player.Lives == 0)
+					Console.WriteLine(" " + player.Name + " has " + player.Lives + " lives.");
+					if (player.Lives == 0)
 					{
 						playerList.Remove(player);
 						Console.WriteLine(" " + player.Name + " has been killed!");
 					}
 				}
 
+				Console.Write("\n Press enter to continue...");
+				Console.ReadLine();
 				Console.Clear();
 			}
         }
